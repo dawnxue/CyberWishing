@@ -18,12 +18,29 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    width: 100%;
+    overflow-x: hidden;
   }
   body {
     background: url(${backgroundImg}) center center/cover no-repeat, linear-gradient(135deg, #fff6e5 0%, #ffe6c7 100%);
     font-family: 'GOTHIC', 'Source Han Sans SC', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
     color: #4b3f2a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
     overflow-x: hidden;
+  }
+  
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 0;
   }
 
   @font-face {
@@ -61,6 +78,11 @@ const GlobalStyle = createGlobalStyle`
     scrollbar-width: thin;
     scrollbar-color: #ffe6c7 #fffaf3;
   }
+
+  /* 重要：这个规则可以确保所有内容居中 */
+  * {
+    box-sizing: border-box;
+  }
 `;
 
 // 颜色与风格
@@ -83,6 +105,14 @@ const Navbar = styled.nav`
   height: 64px;
   border-bottom: 1px solid ${theme.border};
   box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  
+  @media (max-width: 768px) {
+    padding: 0 8px;
+    height: 56px;
+    justify-content: space-between;
+  }
 `;
 
 const NavLeft = styled.div`
@@ -101,6 +131,11 @@ const NavLeft = styled.div`
     2px 2px 2px #bfa97a55,
     0 6px 12px #bfa97a33,
     3px 3px 8px #bfa97a99;
+  
+  @media (max-width: 768px) {
+    position: static;
+    transform: none;
+  }
 `;
 
 const NavCenter = styled.div`
@@ -146,6 +181,12 @@ const NavRight = styled.button`
     outline: none;
     box-shadow: 0 0 0 2px #ffe6c755;
   }
+
+  @media (max-width: 768px) {
+    position: static;
+    padding: 6px 16px;
+    font-size: 0.9rem;
+  }
 `;
 
 // 主体布局
@@ -153,13 +194,22 @@ const Main = styled.main`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 40px 0 0 0;
-  max-width: 900px;
-  min-width: 600px;
-  width: 100%;
+  padding: 15px 0 0 0;
+  max-width: 1100px;
+  width: 98%;
   margin: 0 auto;
-  gap: 32px;
+  gap: 28px;
   box-sizing: border-box;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    min-width: auto;
+    width: 100%;
+    padding: 10px 0;
+    gap: 16px;
+    margin: 0;
+  }
 `;
 
 // 左侧许愿区
@@ -167,28 +217,46 @@ const WishSection = styled.section`
   background: #fff;
   border-radius: 24px;
   box-shadow: 0 4px 24px #ffb84c22;
-  padding: 32px 32px 24px 32px;
+  padding: 28px 28px 20px 28px;
   flex: 3 1 0%;
   min-width: 340px;
-  max-width: 800px;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  height: 100%;
+  
+  @media (max-width: 768px) {
+    min-width: 100%;
+    max-width: 100%;
+    padding: 16px 12px 14px 12px;
+    width: 100%;
+    margin: 0;
+    border-radius: 16px;
+  }
 `;
 
 const BuddhaFrame = styled.div`
   background: ${theme.secondary};
   border-radius: 20px;
-  padding: 24px;
+  padding: 18px;
   margin-bottom: 16px;
   position: relative;
-  width: 400px;
-  height: 400px;
+  width: 480px;
+  height: 480px;
   display: flex;
   align-items: center;
   justify-content: center;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: none;
+    height: auto;
+    aspect-ratio: 1/1;
+    padding: 12px;
+    margin: 0 auto 12px auto;
+    border-radius: 14px;
+  }
 `;
 
 const Incense = styled.img`
@@ -202,10 +270,16 @@ const Incense = styled.img`
 `;
 
 const BuddhaImg = styled.img`
-  width: 400px;
-  height: 400px;
+  width: 480px;
+  height: 480px;
   z-index: 1;
   object-fit: contain;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+  }
 `;
 
 const IncenseHolderInFrame = styled.div`
@@ -240,6 +314,17 @@ const PriceRow = styled.div`
   align-items: center;
   gap: 8px;
   margin: 8px 0 0 0;
+  
+  @media (max-width: 480px) {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    
+    span {
+      font-size: 1rem;
+    }
+  }
 
   span {
     font-weight: 500;
@@ -249,7 +334,7 @@ const PriceRow = styled.div`
 `;
 
 const PriceInput = styled.input`
-  width: ${props => props.$wide ? '65px' : '44px'};
+  width: ${props => props.$wide ? '90px' : '65px'};
   border: 1.5px solid ${theme.border};
   border-radius: 10px;
   padding: 4px 8px;
@@ -395,13 +480,28 @@ const MainActionBtn = styled.button`
 // 右侧社区区
 const CommunitySection = styled.section`
   flex: 2 1 0%;
-  min-width: 240px;
-  max-width: 400px;
+  min-width: 280px;
+  max-width: 450px;
   display: flex;
   flex-direction: column;
   gap: 32px;
   height: 100%;
   box-sizing: border-box;
+  
+  @media (min-width: 769px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: auto;
+    gap: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    min-width: 100%;
+    width: 100%;
+    max-width: 100%;
+    gap: 16px;
+  }
 `;
 
 const WallBox = styled.div`
@@ -409,17 +509,43 @@ const WallBox = styled.div`
   border-radius: 20px;
   box-shadow: 0 2px 12px #ffb84c22;
   padding: 24px;
-  height: 320px;
   display: flex;
   flex-direction: column;
+  
+  @media (min-width: 769px) {
+    &:first-child {
+      height: 500px;
+    }
+    
+    &:last-child {
+      height: 350px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 16px 12px;
+    border-radius: 16px;
+    
+    &:first-child, &:last-child {
+      height: 320px;
+    }
+  }
 `;
 
 const WallTitle = styled.div`
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: ${theme.primary};
-  margin-bottom: 12px;
-  font-family: 'GOTHICB', 'GOTHIC', 'Source Han Sans SC', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+  width: 100%;
+  text-align: left;
+  font-size: 1.1rem;
+  color: #ffb84c;
+  font-family: 'GOTHICB', 'GOTHIC', Arial, sans-serif;
+  margin-bottom: 4px;
+  margin-top: 4px;
+  letter-spacing: 1px;
+  
+  ${WallBox}:last-child & {
+    margin-bottom: 4px;
+  }
 `;
 
 const WishList = styled.ul`
@@ -429,6 +555,23 @@ const WishList = styled.ul`
   flex: 1;
   overflow-y: auto;
   min-height: 0;
+  
+  ${WallBox}:last-child & {
+    padding-right: 4px;
+  }
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: ${theme.border};
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: ${theme.primary};
+  }
 `;
 
 const WishItem = styled.li`
@@ -436,6 +579,11 @@ const WishItem = styled.li`
   border-bottom: 1px solid ${theme.secondary};
   font-size: 1rem;
   word-break: break-all;
+  
+  ${WallBox}:last-child & {
+    padding: 8px 0;
+  }
+  
   &:last-child {
     border-bottom: none;
   }
@@ -473,17 +621,12 @@ const Footer = styled.footer`
   border-top: 1px solid ${theme.border};
   box-sizing: border-box;
   margin-top: 32px;
-`;
-
-const FooterLinks = styled.div`
-  margin-bottom: 8px;
-  a {
-    color: ${theme.accent};
-    margin: 0 12px;
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-    }
+  width: 100%;
+  
+  @media (max-width: 768px) {
+    padding: 20px 10px 16px;
+    margin-top: 20px;
+    min-height: 60px;
   }
 `;
 
@@ -582,6 +725,10 @@ const Toast = styled.div`
 const AccountDropdown = styled.div`
   position: relative;
   display: inline-block;
+  
+  @media (max-width: 768px) {
+    position: relative;
+  }
 `;
 
 const AccountButton = styled.button`
@@ -611,6 +758,11 @@ const AccountButton = styled.button`
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px #ffe6c755;
+  }
+
+  @media (max-width: 768px) {
+    padding: 6px 16px;
+    font-size: 0.9rem;
   }
 `;
 
@@ -673,12 +825,16 @@ const IncenseBox = styled.div`
   background: linear-gradient(135deg, #fff9ec 60%, #fff3e0 100%);
   border-radius: 18px;
   box-shadow: 0 2px 12px #ffb84c22;
-  padding: 28px 24px 18px 24px;
+  padding: 16px 14px 12px 14px;
   margin-bottom: 18px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (min-width: 769px) {
+    padding: 16px 14px 12px 14px;
+  }
 `;
 
 const SectionTitle = styled.div`
@@ -703,6 +859,55 @@ const WishBox = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+
+const somniaNetwork = {
+  chainId: '0xC498', // 十六进制格式的链ID 50312
+  chainName: 'Somnia Testnet',
+  nativeCurrency: {
+    name: 'STT',
+    symbol: 'STT',
+    decimals: 18
+  },
+  rpcUrls: ['https://dream-rpc.somnia.network/'],
+  blockExplorerUrls: ['https://shannon-explorer.somnia.network/']
+};
+
+// 简化后的网络切换函数 - 只做切换，不做添加
+const switchToSomniaNetwork = async () => {
+  if (!window.ethereum) return false;
+  
+  try {
+    // 直接尝试切换到Somnia网络，不做检查
+    await window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: '0xC498' }], // 50312的十六进制
+    });
+    return true;
+  } catch (error) {
+    console.error('切换网络失败:', error);
+    
+    // 如果是用户拒绝，给出提示
+    if (error.code === 4001) {
+      showToast('您已拒绝切换网络，请手动切换到Somnia Testnet');
+    } else {
+      showToast('请手动切换到Somnia Testnet');
+    }
+    return false;
+  }
+};
+
+// 检查网络状态
+const isOnSomniaNetwork = async () => {
+  if (!window.ethereum) return false;
+  
+  try {
+    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+    return chainId === '0xC498' || parseInt(chainId, 16) === 50312;
+  } catch (error) {
+    console.error('Failed to check network:', error);
+    return false;
+  }
+};
 
 export default function App() {
   // 状态管理
@@ -735,11 +940,17 @@ export default function App() {
       try {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         setAccount(accounts[0]);
+        
+        // 连接后检查网络，如果不对则提示
+        const onCorrectNetwork = await isOnSomniaNetwork();
+        if (!onCorrectNetwork) {
+          showToast("Please switch to Somnia Testnet network (Chain ID: 50312)");
+        }
       } catch (err) {
-        alert('用户拒绝连接或发生错误');
+        alert('User rejected the connection or an error occurred');
       }
     } else {
-      alert('请先安装 MetaMask 钱包插件！');
+      alert('Please install MetaMask wallet first!');
       window.open('https://metamask.io/download/', '_blank');
     }
   };
@@ -759,12 +970,31 @@ export default function App() {
       showToast("Please enter your wish!");
       return;
     }
+    
+    // 只检查网络，如果不正确则提示
+    const onCorrectNetwork = await isOnSomniaNetwork();
+    if (!onCorrectNetwork) {
+      showToast("Please switch to Somnia Testnet network (Chain ID: 50312)");
+      return;
+    }
+    
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(contractAddress, contractABI, signer);
+      
+      // 检查是否是免费香火(0.5小时)的特殊情况
+      const isFreeIncense = incenseDuration === 0.5 && incensePrice === "0";
+      
+      // 关键转换：输入框显示0.5，但传给合约的是0
+      const contractHours = isFreeIncense ? 0 : incenseDuration;
       const value = ethers.parseEther(String(incensePrice));
-      const tx = await contract.makeWish(wishText, incenseDuration, { value });
+      
+      console.log("UI shows:", incenseDuration, "hours, Sending to contract:", contractHours, "hours");
+      console.log("ETH value:", value);
+      
+      // 调用合约函数，使用转换后的contractHours
+      const tx = await contract.makeWish(wishText, contractHours, { value });
       await tx.wait();
       showToast("Wish submitted successfully!");
       setWishText("");
@@ -772,6 +1002,7 @@ export default function App() {
       fetchMyWishes();
       fetchRemainingTime();
     } catch (err) {
+      console.error("Wish error:", err);
       showToast("Wish failed: " + (err.info?.error?.message || err.message));
     }
   };
@@ -833,6 +1064,11 @@ export default function App() {
           const accounts = await window.ethereum.request({ method: 'eth_accounts' });
           if (accounts.length > 0) {
             setAccount(accounts[0]);
+            // 如果已连接钱包，检查网络
+            const onCorrectNetwork = await isOnSomniaNetwork();
+            if (!onCorrectNetwork) {
+              showToast("Please switch to Somnia Testnet network (Chain ID: 50312)");
+            }
           }
         } catch (err) {
           // 忽略错误
@@ -844,13 +1080,34 @@ export default function App() {
     // 监听账户切换
     const handleAccountsChanged = (accounts) => {
       setAccount(accounts[0] || "");
+      if (accounts[0]) {
+        // 账户变更时，检查网络
+        isOnSomniaNetwork().then(correct => {
+          if (!correct) {
+            showToast("Please switch to Somnia Testnet network (Chain ID: 50312)");
+          }
+        });
+      }
     };
+    
+    // 监听链变更
+    const handleChainChanged = (chainId) => {
+      // 链变更时检查是否是目标网络
+      const decimal = parseInt(chainId, 16);
+      if (chainId !== '0xC498' && decimal !== 50312) {
+        showToast("Please switch to Somnia Testnet network (Chain ID: 50312)");
+      }
+    };
+    
     if (window.ethereum) {
       window.ethereum.on('accountsChanged', handleAccountsChanged);
+      window.ethereum.on('chainChanged', handleChainChanged);
     }
+    
     return () => {
       if (window.ethereum) {
         window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+        window.ethereum.removeListener('chainChanged', handleChainChanged);
       }
     };
   }, []);
@@ -905,7 +1162,22 @@ export default function App() {
       <Toast show={toast.show}>{toast.msg}</Toast>
       <Navbar>
         <NavLeft>
-          <img src={logo} alt="CyberWishing Logo" style={{ height: '140px', verticalAlign: 'middle' }} />
+          <img 
+            src={logo} 
+            alt="CyberWishing Logo" 
+            style={{ 
+              height: (() => {
+                if (window.innerWidth <= 480) {
+                  return '85px'; // 在小屏幕手机上更大
+                } else if (window.innerWidth <= 768) {
+                  return '80px'; // 在大屏幕手机/小平板上稍微小一点
+                } else {
+                  return '120px'; // 在桌面端保持不变
+                }
+              })(),
+              verticalAlign: 'middle' 
+            }} 
+          />
         </NavLeft>
         <NavCenter>
           {/* <NavLink href="#">Make a Wish</NavLink>
@@ -938,7 +1210,7 @@ export default function App() {
             </IncenseHolderInFrame>
           </BuddhaFrame>
           <SectionTitle>Incense Setting</SectionTitle>
-          <IncenseBox style={{ padding: "18px 16px 12px 16px", marginBottom: "16px" }}>
+          <IncenseBox>
             <PriceRow>
               <span>Incense Duration</span>
               <PriceInput
@@ -987,7 +1259,7 @@ export default function App() {
             <div style={{ margin: "0px 0 0 0", textAlign: "center" }}>
               <FreeIncense
                 onClick={() => {
-                  setIncenseDuration(0);
+                  setIncenseDuration(0.5); // 保持显示为0.5小时
                   setIncensePrice("0");
                   setDurationError("");
                 }}
@@ -1063,11 +1335,20 @@ export default function App() {
 
       {/* 底部区域 */}
       <Footer>
-        <FooterLinks>
-          <a href="#">About Us</a> | <a href="#">Privacy Policy</a> | 
-          <a href="https://twitter.com/dawnx666" target="_blank" rel="noopener noreferrer">Contact</a>
-        </FooterLinks>
-        <div>CyberWishing @PopCraft</div>
+        <div>
+          CyberWishing <a 
+            href="https://twitter.com/dawnx666" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{
+              color: '#ff914d', // 使用截图中的橙色
+              textDecoration: 'underline', // 添加下划线
+              fontWeight: 'bold'
+            }}
+          >
+            @dawnxue
+          </a>
+        </div>
       </Footer>
     </>
   );
