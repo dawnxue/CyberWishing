@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import facuet from './assets/facuet.png'
 import './App.css'
 import buddhaImg from './assets/buddha.png';
 import incenseImg from './assets/incense.png';
@@ -860,6 +860,51 @@ const WishBox = styled.div`
   align-items: center;
 `;
 
+// 水龙头链接的样式，大图标版本
+const FaucetLink = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: ${theme.accent};
+  font-size: 1.1rem;
+  font-weight: bold;
+  font-family: 'GOTHICB', 'GOTHIC', 'Source Han Sans SC', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+  padding: 8px;
+  border-radius: 20px;
+  transition: transform 0.2s, opacity 0.2s;
+  
+  img {
+    width: 50px; // 更大的图片尺寸
+    height: 50px;
+    margin-right: 0px;
+  }
+  
+  &:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+  
+  &:active {
+    transform: scale(0.98);
+  }
+`;
+
+// 创建一个容器来并排放置Make a Wish按钮和水龙头链接
+const ActionButtonsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; // 按钮之间的间距
+  margin: 16px auto 0 auto;
+  flex-wrap: wrap; // 在小屏幕上允许换行
+  
+  @media (max-width: 768px) {
+    gap: 15px;
+  }
+`;
+
 const somniaNetwork = {
   chainId: '0xC498', // 十六进制格式的链ID 50312
   chainName: 'Somnia Testnet',
@@ -932,7 +977,7 @@ export default function App() {
   }
 
   // 付费香火描述
-  const paidDesc = `Incense Duration: ${incenseDuration} hour${incenseDuration > 1 ? "s" : ""} = ${incensePrice} ETH`;
+  const paidDesc = `Incense Duration: ${incenseDuration} hour${incenseDuration > 1 ? "s" : ""} = ${incensePrice} STT`;
 
   // 连接钱包
   const connectWallet = async () => {
@@ -1241,7 +1286,7 @@ export default function App() {
                     return;
                   }
                   if (Math.abs(Math.round(price / base) - price / base) > 1e-8) {
-                    setDurationError("Price must be a multiple of 0.0001 ETH.");
+                    setDurationError("Price must be a multiple of 0.0001 STT.");
                     setIncensePrice(value);
                     return;
                   }
@@ -1251,7 +1296,7 @@ export default function App() {
                 }}
                 $wide
               />
-              <span>ETH</span>
+              <span>STT</span>
             </PriceRow>
             {durationError && (
               <ErrorTip>{durationError}</ErrorTip>
@@ -1285,9 +1330,20 @@ export default function App() {
             }}
             style={{ margin: "0 0 8px 0" }}
           />
-          <MainActionBtn style={{ margin: "16px auto 0 auto" }} onClick={makeWish}>
-            Make a Wish
-          </MainActionBtn>
+          <ActionButtonsContainer>
+            <MainActionBtn onClick={makeWish}>
+              Make a Wish
+            </MainActionBtn>
+            
+            <FaucetLink 
+              href="https://testnet.somnia.network/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <img src={facuet} alt="Faucet" />
+              Get $STT
+            </FaucetLink>
+          </ActionButtonsContainer>
         </WishSection>
 
         {/* 右侧社区区 */}
