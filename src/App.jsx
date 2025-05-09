@@ -7,7 +7,7 @@ import buddhaImg from './assets/buddha.png';
 import incenseImg from './assets/incense.png';
 import incenseHolderImg from './assets/incense-holder.png';
 import backgroundImg from './assets/background.png';
-import logo from './assets/logoV1.PNG';
+import logo from './assets/logoV1.png';
 import { ethers } from "ethers";
 import gothicFont from './assets/fonts/GOTHIC.TTF';
 import gothicBoldFont from './assets/fonts/GOTHICB.TTF';
